@@ -9,6 +9,11 @@ h2 {
 
 a {
 	color : #00B7FF;
+	cursor: pointer;
+}
+
+button {
+	cursor: pointer;
 }
 
 #wrapper {
@@ -19,23 +24,27 @@ a {
 #userList {
 	margin : 0 0 30px 0;
 }
+
 #userList table {
 	border-collapse : separate;
 	border-spacing : 1px;
 	background : #CCC;
 }
+
 #userList table th {
 	background : #EEE;
 	font-weight : 600;
 	padding : 10px 20px;
 	text-align : center;
 }
+
 #userList table tbody {
 	padding : 0;
 	margin : 0;
 	border-collapse : collapse;
 	border-spacing : 0px;
 }
+
 #userList table td {
 	background : #FFF;
 	padding : 5px 10px;
@@ -45,8 +54,10 @@ a {
 #userInfo {
 	width : 250px;
 	position : absolute;
-	top : 0; left : 0;
+	top : 0;
+	left : 0;
 }
+
 #userInfo p {
 	padding : 15px;
 	border : 1px solid #CCC;
@@ -55,5 +66,6 @@ a {
 
 fieldset {
 	border : 0;
-	padding : 0; margin : 0;
+	padding : 0;
+	margin : 0;
 }
