@@ -17,9 +17,9 @@ function populateTable() {
 		// For each item in our JSON, add a table row and cells to the content string
 		for (var i = 0, j = data.length; i < j; i++) {
 			tableContent += '<tr>';
-			tableContent += '<td><a class="linkshowuser" title="Show Details" onclick="showUserInfo(\'' + data[i].username + '\')">' + data[i].username + '</a></td>';
+			tableContent += '<td><a class="linkshowuser" title="Show Details" onclick="showUserInfo(\'' + data[i]._id + '\')">' + data[i].username + '</a></td>';
 			tableContent += '<td>' + data[i].email + '</td>';
-			tableContent += '<td><a class="linkdeleteuser" rel="' + data[i]._id + '">delete</a></td>';
+			tableContent += '<td><a class="linkdeleteuser" onclick="deleteUser(\'' + data[i]._id + '\')">delete</a></td>';
 			tableContent += '</tr>';
 		}
 		// Inject the whole content string into our existing HTML table
@@ -27,11 +27,11 @@ function populateTable() {
 	});
 }
 // Show User Info
-function showUserInfo(username) {
+function showUserInfo(id) {
 	// Get Index of object based on id value
 	var arrayPosition = userListData.map(function(arrayItem) {
-		return arrayItem.username;
-	}).indexOf(username);
+		return arrayItem._id;
+	}).indexOf(id);
 	// Get our User Object
 	var thisUserObject = userListData[arrayPosition];
 	//Populate Info Box
@@ -65,11 +65,11 @@ function addUser() {
 		};
 		// Use AJAX to post the object to our adduser service
 		$.ajax({
-			type: 'POST',
-			data: newUser,
-			url: '/adduser',
-			dataType: 'JSON'
-		}).done(function( response ) {
+			type : 'POST',
+			data : newUser,
+			url : '/adduser',
+			dataType : 'JSON'
+		}).done(function(response) {
 			// Check for successful (blank) response
 			if (response.msg === '') {
 				// Clear the form inputs
@@ -87,6 +87,30 @@ function addUser() {
 	} else {
 		// If errorCount is more than 0, error out
 		alert('Please fill in all fields');
+	}
+	return false;
+}
+
+// Delete User
+function deleteUser(id) {
+	// Pop up a confirmation dialog
+	var confirmation = confirm('Are you sure you want to delete this user?');
+	// Check and make sure the user confirmed
+	if (confirmation === true) {
+		// If they did, do our delete
+		$.ajax({
+			type : 'DELETE',
+			url : '/deleteuser/' + id
+		}).done(function(response) {
+			// Check for a successful (blank) response
+			if (response.msg === '') {
+
+			} else {
+				alert('Error: ' + response.msg);
+			}
+			// Update the table
+			populateTable();
+		});
 	}
 	return false;
 }

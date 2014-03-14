@@ -19,9 +19,27 @@ exports.adduser = function(db) {
 		db.collection('userlist').insert(req.body, function(err, result) {
 			res.send(
 				(err === null) ? {
-					msg: ''
+					msg : ''
 				} : {
-					msg: err
+					msg : err
+				}
+			);
+		});
+	};
+};
+
+/*
+ * DELETE to deleteuser.
+ */
+
+exports.deleteuser = function(db) {
+	return function(req, res) {
+		db.collection('userlist').removeById(req.params.id, function(err, result) {
+			res.send(
+				(result === 1) ? {
+					msg : ''
+				} : {
+					msg :'error: ' + err
 				}
 			);
 		});
