@@ -10,7 +10,7 @@ var http = require('http');
 var path = require('path');
 // Database
 var pg = require('pg');
-var con = "pg://dpr:zxcasdqwe@localhost:5432/dendenite-sample-db";
+var con = process.env.DATABASE_URL || "pg://dpr:zxcasdqwe@localhost:5432/dendenite-sample-db";
 
 var app = express();
 
