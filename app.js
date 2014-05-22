@@ -33,6 +33,7 @@ if ('development' == app.get('env')) {
 }
 
 client.connect();
+client.query("CREATE TABLE IF NOT EXISTS users(_id bigserial NOT NULL, username character varying(16) NOT NULL, email character varying(30), CONSTRAINT users_pkey PRIMARY KEY (_id))");
 
 app.get('/', routes.index);
 app.get('/userlist', user.userlist(client));
