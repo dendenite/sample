@@ -1,54 +1,30 @@
 extends layout
 
 block content
-  // CONT
-  div(class='container')
-    h1
-      a(href='')=title
+  h1=title
 
-    // NAV
-    div(class='navbar')
+  // Wrapper
+  #wrapper
 
-      // NAV-INNER
-      div(class='navbar-inner')
+    // USER LIST
+    h3 User List
+    #userList
+      table
+        thead
+          th UserName
+          th Email
+          th Delete?
+        tbody
+    // /USER LIST
 
-        // NAV-CONT
-        div(class='container')
+    // ADD USER
+    h2 Add User
+    #addUser
+      fieldset
+        input#inputUserName(type='text', placeholder='Username')
+        input#inputUserEmail(type='text', placeholder='Email')
+        br
+        button#btnAddUser(onclick='addUser()') Add User
+    // /ADD USER
 
-          // UL-NAV
-          ul(class='nav')
-            li(class='active')
-              a(href='') Home
-
-            // DROPDOWN
-            li(class='dropdown')
-              a(href='', class='dropdown-toggle', data-toggle='dropdown') Projects &nbsp;
-                b(class='caret')
-              ul(class='dropdown-menu')
-                li
-                  a(href='') Sample
-                li
-                  a(href='') SMKT
-            // /DROPDOWN
-
-            li
-              a(href='') About
-            li
-              a(href='') Contact
-          // /UL-NAV
-
-        // /NAV-CONT
-
-      // /NAV-INNER
-
-    // /NAV
-
-    // BANNER
-    div(class='hero-unit')
-      h1 Slideshow
-      p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      a(href='', class='btn btn-large btn-success') Get Started
-
-    // /BANNER
-
-  // /CONT
+  // /WRAPPER

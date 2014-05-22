@@ -9,13 +9,12 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 // Database
-var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/sample", {
-	native_parser:true
-});
+var pg = require('pg');
+var con = "pg://dpr:zxcasdqwe@localhost:5432/dendenite-sample-db";
 
 var app = express();
 
+var client = new pg.Client(con);
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -33,11 +32,13 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/userlist', user.userlist(db));
-app.post('/adduser', user.adduser(db));
-app.delete('/deleteuser/:id', user.deleteuser(db));
+client.connect();
 
-http.createServer(app).listen(app.get('port'), function() {
+app.get('/', routes.index);
+app.get('/userlist', user.userlist(client));
+app.post('/adduser', user.adduser(client));
+app.delete('/deleteuser/:id', user.deleteuser(client));
+
+http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });

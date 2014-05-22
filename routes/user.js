@@ -2,10 +2,14 @@
  * GET userlist page.
  */
 
-exports.userlist = function(db) {
-	return function(req, res) {
-		db.collection('userlist').find().toArray(function (err, items) {
-			res.json(items);
+exports.userlist = function(client) {
+	return function (req, res) {
+		var query = client.query("SELECT * FROM users", function (err, result) {
+			if (err) {
+				res.send({msg : err});
+			} else {
+				res.json(result.rows);
+			}
 		});
 	};
 };
@@ -14,16 +18,10 @@ exports.userlist = function(db) {
  * POST to adduser.
  */
 
-exports.adduser = function(db) {
-	return function(req, res) {
-		db.collection('userlist').insert(req.body, function(err, result) {
-			res.send(
-				(err === null) ? {
-					msg : ''
-				} : {
-					msg : err
-				}
-			);
+exports.adduser = function(client) {
+	return function (req, res) {
+		client.query("INSERT INTO users(username, email) values('" + req.body.username + "', '" + req.body.email + "')", function (err, result) {
+			res.send({ msg : (err) ? err : '' });
 		});
 	};
 };
@@ -32,16 +30,10 @@ exports.adduser = function(db) {
  * DELETE to deleteuser.
  */
 
-exports.deleteuser = function(db) {
-	return function(req, res) {
-		db.collection('userlist').removeById(req.params.id, function(err, result) {
-			res.send(
-				(result === 1) ? {
-					msg : ''
-				} : {
-					msg :'error: ' + err
-				}
-			);
+exports.deleteuser = function(client) {
+	return function (req, res) {
+		client.query("DELETE FROM users WHERE _id = " + req.params.id, function (err, result) {
+			res.send({ msg : (err) ? err : '' });
 		});
 	};
 };

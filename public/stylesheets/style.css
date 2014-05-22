@@ -17,7 +17,6 @@ button {
 }
 
 #wrapper {
-	padding-left : 312px;
 	position : relative;
 }
 
@@ -49,19 +48,6 @@ button {
 	background : #FFF;
 	padding : 5px 10px;
 	text-align : center;
-}
-
-#userInfo {
-	width : 250px;
-	position : absolute;
-	top : 0;
-	left : 0;
-}
-
-#userInfo p {
-	padding : 15px;
-	border : 1px solid #CCC;
-	background : rgba(80,120,255,0.05);
 }
 
 fieldset {

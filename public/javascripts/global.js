@@ -1,7 +1,7 @@
 // Userlist data array for filling in info box
 var userListData = [];
 // DOM Ready =============================================================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 	// Populate the user table on initial page load
 	populateTable();
 });
@@ -11,13 +11,13 @@ function populateTable() {
 	// Empty content string
 	var tableContent = '';
 	// jQuery AJAX call for JSON
-	$.getJSON( '/userlist', function(data) {
+	$.getJSON( '/userlist', function (data) {
 		// Stick our user data array into a userlist variable in the global object
 	    userListData = data;
 		// For each item in our JSON, add a table row and cells to the content string
 		for (var i = 0, j = data.length; i < j; i++) {
 			tableContent += '<tr>';
-			tableContent += '<td><a class="linkshowuser" title="Show Details" onclick="showUserInfo(\'' + data[i]._id + '\')">' + data[i].username + '</a></td>';
+			tableContent += '<td>' + data[i].username + '</td>';
 			tableContent += '<td>' + data[i].email + '</td>';
 			tableContent += '<td><a class="linkdeleteuser" onclick="deleteUser(\'' + data[i]._id + '\')">delete</a></td>';
 			tableContent += '</tr>';
@@ -25,21 +25,6 @@ function populateTable() {
 		// Inject the whole content string into our existing HTML table
 		document.querySelector('#userList table tbody').innerHTML = tableContent;
 	});
-}
-// Show User Info
-function showUserInfo(id) {
-	// Get Index of object based on id value
-	var arrayPosition = userListData.map(function(arrayItem) {
-		return arrayItem._id;
-	}).indexOf(id);
-	// Get our User Object
-	var thisUserObject = userListData[arrayPosition];
-	//Populate Info Box
-	document.getElementById('userInfoName').textContent = thisUserObject.fullname;
-	document.getElementById('userInfoAge').textContent = thisUserObject.age;
-	document.getElementById('userInfoGender').textContent = thisUserObject.gender;
-	document.getElementById('userInfoLocation').textContent = thisUserObject.location;
-	return false;
 }
 
 // Add User
@@ -57,11 +42,7 @@ function addUser() {
 		// If it is, compile all user info into one object
 		var newUser = {
 			'username' : document.getElementById('inputUserName').value,
-			'email' : document.getElementById('inputUserEmail').value,
-			'fullname' : document.getElementById('inputUserFullname').value,
-			'age' : document.getElementById('inputUserAge').value,
-			'location' : document.getElementById('inputUserLocation').value,
-			'gender' : document.getElementById('inputUserGender').value
+			'email' : document.getElementById('inputUserEmail').value
 		};
 		// Use AJAX to post the object to our adduser service
 		$.ajax({
@@ -69,7 +50,7 @@ function addUser() {
 			data : newUser,
 			url : '/adduser',
 			dataType : 'JSON'
-		}).done(function(response) {
+		}).done(function (response) {
 			// Check for successful (blank) response
 			if (response.msg === '') {
 				// Clear the form inputs
@@ -101,7 +82,7 @@ function deleteUser(id) {
 		$.ajax({
 			type : 'DELETE',
 			url : '/deleteuser/' + id
-		}).done(function(response) {
+		}).done(function (response) {
 			// Check for a successful (blank) response
 			if (response.msg === '') {
 
